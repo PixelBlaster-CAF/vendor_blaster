@@ -63,6 +63,9 @@ else
 $(call inherit-product-if-exists, vendor/google/modules/build/mainline_modules_s_flatten_apex.mk)
 endif
 
+# Fonts
+include vendor/blaster/target/product/fonts.mk
+
 # Move Wi-Fi modules to vendor.
 PRODUCT_VENDOR_MOVE_ENABLED := true
 
