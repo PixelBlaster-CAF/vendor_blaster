@@ -24,6 +24,9 @@ DONT_DEXPREOPT_PREBUILTS := true
 # Filesystem
 TARGET_FS_CONFIG_GEN += vendor/blaster/target/config/config.fs
 
+# Gapps
+$(call inherit-product, vendor/blaster/target/product/gapps.mk)
+
 # HIDL
 DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE += \
      vendor/blaster/target/config/blaster_vendor_framework_compatibility_matrix.xml
