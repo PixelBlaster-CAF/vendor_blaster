@@ -18,4 +18,5 @@ PRODUCT_PACKAGES += \
     BlasterSettingsOverlay \
     BlasterSettingsProviderOverlay \
     BlasterSystemUIOverlay \
-    BlasterLauncherOverlay
+    BlasterLauncherOverlay \
+    NavigationBarModeGesturalOverlayFS
