@@ -4,19 +4,19 @@
 
 # PA Variables
 
-SOONG_CONFIG_NAMESPACES += aospaVarsPlugin
+SOONG_CONFIG_NAMESPACES += blasterVarsPlugin
 
-SOONG_CONFIG_aospaVarsPlugin :=
+SOONG_CONFIG_blasterVarsPlugin :=
 
 define addVar
-  SOONG_CONFIG_aospaVarsPlugin += $(1)
-  SOONG_CONFIG_aospaVarsPlugin_$(1) := $$(subst ",\",$$($1))
+  SOONG_CONFIG_blasterVarsPlugin += $(1)
+  SOONG_CONFIG_blasterVarsPlugin_$(1) := $$(subst ",\",$$($1))
 endef
 
 $(foreach v,$(EXPORT_TO_SOONG),$(eval $(call addVar,$(v))))
 
-SOONG_CONFIG_NAMESPACES += aospaGlobalVars
-SOONG_CONFIG_aospaGlobalVars += \
+SOONG_CONFIG_NAMESPACES += blasterGlobalVars
+SOONG_CONFIG_blasterGlobalVars += \
     target_init_vendor_lib \
     target_ld_shim_libs \
     target_process_sdk_version_override \
@@ -27,22 +27,22 @@ TARGET_INIT_VENDOR_LIB ?= vendor_init
 TARGET_SURFACEFLINGER_UDFPS_LIB ?= surfaceflinger_udfps_lib
 
 # Soong value variables
-SOONG_CONFIG_aospaGlobalVars_target_init_vendor_lib := $(TARGET_INIT_VENDOR_LIB)
-SOONG_CONFIG_aospaGlobalVars_target_ld_shim_libs := $(subst $(space),:,$(TARGET_LD_SHIM_LIBS))
-SOONG_CONFIG_aospaGlobalVars_target_process_sdk_version_override := $(TARGET_PROCESS_SDK_VERSION_OVERRIDE)
-SOONG_CONFIG_aospaGlobalVars_target_surfaceflinger_udfps_lib := $(TARGET_SURFACEFLINGER_UDFPS_LIB)
+SOONG_CONFIG_blasterGlobalVars_target_init_vendor_lib := $(TARGET_INIT_VENDOR_LIB)
+SOONG_CONFIG_blasterGlobalVars_target_ld_shim_libs := $(subst $(space),:,$(TARGET_LD_SHIM_LIBS))
+SOONG_CONFIG_blasterGlobalVars_target_process_sdk_version_override := $(TARGET_PROCESS_SDK_VERSION_OVERRIDE)
+SOONG_CONFIG_blasterGlobalVars_target_surfaceflinger_udfps_lib := $(TARGET_SURFACEFLINGER_UDFPS_LIB)
 
 # Gestures
 define add-gesturevar-if-exist
 $(eval vn := $(shell echo $(1) | tr '[:upper:]' '[:lower:]'))
 $(if $($(1)), \
-  $(eval SOONG_CONFIG_aospaGestureVars += $(vn)) \
-  $(eval SOONG_CONFIG_aospaGestureVars_$(vn) := $(patsubst "%",%,$($(1)))) \
+  $(eval SOONG_CONFIG_blasterGestureVars += $(vn)) \
+  $(eval SOONG_CONFIG_blasterGestureVars_$(vn) := $(patsubst "%",%,$($(1)))) \
 )
 endef
 
-SOONG_CONFIG_NAMESPACES += aospaGestureVars
-SOONG_CONFIG_aospaGestureVars :=
+SOONG_CONFIG_NAMESPACES += blasterGestureVars
+SOONG_CONFIG_blasterGestureVars :=
 GESTURE_SOONG_VARS := \
     TARGET_GESTURES_NODE \
     TARGET_TAP_TO_WAKE_NODE \

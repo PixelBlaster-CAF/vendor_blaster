@@ -18,45 +18,23 @@
 # Guarantees that the following are defined:
 #     AOSPA_MAJOR_VERSION
 #     AOSPA_MINOR_VERSION
-#     AOSPA_BUILD_VARIANT
+#     BLASTER_BUILD_VARIANT
 #
 
 # This is the global AOSPA version flavor that determines the focal point
 # behind our releases. This is bundled alongside $(AOSPA_MINOR_VERSION)
 # and only changes per major Android releases.
-AOSPA_MAJOR_VERSION := sapphire
+BLASTER_BUILD_VERSION := 4.5
 
-# The version code is the upgradable portion during the cycle of
-# every major Android release. Each version code upgrade indicates
-# our own major release during each lifecycle.
-AOSPA_MINOR_VERSION := 1
+BUILD_GAPPS := Vanilla
 
-# Build Variants
-#
-# Alpha: Development / Test
-# Beta: Public releases with CI
-# Release: Final Product | No Tagging
-ifndef AOSPA_BUILDTYPE
-  AOSPA_BUILD_VARIANT := alpha
-else
-  ifeq ($(AOSPA_BUILDTYPE), BETA)
-      AOSPA_BUILD_VARIANT := beta
-  else ifeq ($(AOSPA_BUILDTYPE), RELEASE)
-      AOSPA_BUILD_VARIANT := release
-  endif
-endif
+CAF_REVISION_TAG := LA.QSSI.12.0.r1-05800.01-qssi.0
 
 # Build Date
 BUILD_DATE := $(shell date -u +%Y%m%d)
 
-# AOSPA Version
-AOSPA_VERSION := $(AOSPA_MAJOR_VERSION)-$(AOSPA_MINOR_VERSION)-$(AOSPA_BUILD)-$(AOSPA_BUILD_VARIANT)-$(BUILD_DATE)
-
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
-    ro.aospa.version=$(AOSPA_VERSION)
-
-# The properties will be uppercase for parse by Settings, etc.
-PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
-    ro.aospa.version.major=$(shell V1=$(AOSPA_MAJOR_VERSION); echo $${V1^}) \
-    ro.aospa.version.minor=$(AOSPA_MINOR_VERSION) \
-    ro.aospa.build.variant=$(shell V2=$(AOSPA_BUILD_VARIANT); echo $${V2^})
+    ro.pb.version=$(BLASTER_BUILD_VERSION) \
+    ro.pb.build_date=$(BUILD_DATE) \
+    ro.pb.build_type=$(BLASTER_BUILD_VARIANT) \
+    ro.caf.revision.tag=$(CAF_REVISION_TAG)

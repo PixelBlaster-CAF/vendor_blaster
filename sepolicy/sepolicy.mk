@@ -13,10 +13,10 @@
 # limitations under the License.
 
 PRODUCT_PRIVATE_SEPOLICY_DIRS += \
-    vendor/aospa/sepolicy/private
+    vendor/blaster/sepolicy/private
 
 PRODUCT_PUBLIC_SEPOLICY_DIRS += \
-    vendor/aospa/sepolicy/public
+    vendor/blaster/sepolicy/public
 
 BOARD_VENDOR_SEPOLICY_DIRS += \
-    vendor/aospa/sepolicy/vendor
+    vendor/blaster/sepolicy/vendor

@@ -16,10 +16,10 @@
 # limitations under the License.
 
 """
-Merge script for AOSPA
+Merge script for PixelBlaster
 
  The source directory; this is automatically two folder up because the script
- is located in vendor/aospa/build/tools. Other ROMs will need to change this. The logic is
+ is located in vendor/blaster/build/tools. Other ROMs will need to change this. The logic is
  as follows:
 
  1. Get the absolute path of the script with os.path.realpath in case there is a symlink
@@ -40,7 +40,7 @@ from git.exc import GitCommandError
 
 BASE_URL = "https://source.codeaurora.org/quic/la/"
 WORKING_DIR = "{0}/../../../..".format(os.path.dirname(os.path.realpath(__file__)))
-MANIFEST_NAME = "aospa.xml"
+MANIFEST_NAME = "blaster.xml"
 REPOS_TO_MERGE = {}
 REPOS_RESULTS = {}
 
@@ -100,7 +100,7 @@ def read_custom_manifest(default_repos):
             if repo.tag == "remove-project":
                 removed_repos.append(repo.get("name"))
             else:
-                if repo.get("remote") == "aospa":
+                if repo.get("remote") == "blaster":
                     project_repos.append(repo.get("path"))
 
         for repo in removed_repos:

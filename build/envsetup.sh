@@ -1,4 +1,4 @@
-function __print_aospa_functions_help() {
+function __print_blaster_functions_help() {
 cat <<EOF
 Additional Paranoid Android functions:
 - cafmerge:        Utility to merge CAF tags.
@@ -11,13 +11,13 @@ function cafmerge()
     target_branch=$1
     set_stuff_for_environment
     T=$(gettop)
-    python3 $T/vendor/aospa/build/tools/merge-caf.py $target_branch
+    python3 $T/vendor/blaster/build/tools/merge-caf.py $target_branch
 }
 
 function repopick()
 {
     T=$(gettop)
-    $T/vendor/aospa/build/tools/repopick.py $@
+    $T/vendor/blaster/build/tools/repopick.py $@
 }
 
 export SKIP_ABI_CHECKS="true"

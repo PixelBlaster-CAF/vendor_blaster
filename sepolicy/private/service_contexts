@@ -1,4 +1,4 @@
-# AOSPA Power HAL
+# blaster Power HAL
 vendor.aospa.power.IPowerFeature/default    u:object_r:hal_power_service:s0
 
 # Pocket Judge

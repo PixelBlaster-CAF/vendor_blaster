@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2021 Paranoid Android
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<resources>
+
+    <!-- Enable round icons by default. -->
+    <bool name="config_useRoundIcon">true</bool>
+
+    <!-- Specifies the path that is used by AdaptiveIconDrawable class to crop launcher icons. -->
+    <string name="config_icon_mask" translatable="false">"M50 0C77.6 0 100 22.4 100 50C100 77.6 77.6 100 50 100C22.4 100 0 77.6 0 50C0 22.4 22.4 0 50 0Z"</string>
+
+    <!-- Corner radius for bottom sheet system dialogs -->
+    <dimen name="config_bottomDialogCornerRadius">16dip</dimen>
+
+    <!-- Corner radius of system buttons -->
+    <dimen name="config_buttonCornerRadius">4dip</dimen>
+
+    <!-- Corner radius of system dialogs -->
+    <dimen name="config_dialogCornerRadius">8dip</dimen>
+
+    <!-- The amount to scale fullscreen snapshots for Overview and snapshot starting windows. -->
+    <item type="dimen" name="config_highResTaskSnapshotScale">0.8</item>
+
+    <!-- Corner radius of system progress bars -->
+    <dimen name="config_progressBarCornerRadius">1000dip</dimen>
+
+    <!-- Default list of files pinned by the Pinner Service -->
+    <string-array translatable="false" name="config_defaultPinnerServiceFiles">
+        <item>"/system/bin/surfaceflinger"</item>
+        <item>"/system/framework/framework.jar"</item>
+        <item>"/system/framework/services.jar"</item>
+        <item>"/system/framework/ext.jar"</item>
+        <item>"/system/framework/QPerformance.jar"</item>
+        <item>"/system/framework/QXPerformance.jar"</item>
+        <item>"/system/framework/UxPerformance.jar"</item>
+        <item>"/system/system_ext/priv-app/SystemUI/SystemUI.apk"</item>
+        <item>"/system/lib/libRScpp.so"</item>
+        <item>"/system/lib/libRS.so"</item>
+        <item>"/system/lib/libRS_internal.so"</item>
+        <item>"/system/lib/libbcinfo.so"</item>
+        <item>"/system/lib/libRSDriver.so"</item>
+        <item>"/system/lib/libRSCpuRef.so"</item>
+        <item>"/system/lib/libblas.so"</item>
+        <item>"/system/lib64/libRScpp.so"</item>
+        <item>"/system/lib64/libRS.so"</item>
+        <item>"/system/lib64/libRS_internal.so"</item>
+        <item>"/system/lib64/libbcinfo.so"</item>
+        <item>"/system/lib64/libRSDriver.so"</item>
+        <item>"/system/lib64/libRSCpuRef.so"</item>
+        <item>"/system/lib64/libblas.so"</item>
+        <item>"/vendor/lib/libcamxexternalformatutils.so"</item>
+        <item>"/vendor/lib/libCB.so"</item>
+        <item>"/vendor/lib/libgsl.so"</item>
+        <item>"/vendor/lib64/libcamxexternalformatutils.so"</item>
+        <item>"/vendor/lib64/libipebpsstriping.so"</item>
+        <item>"/vendor/lib64/libCB.so"</item>
+        <item>"/vendor/lib64/libgsl.so"</item>
+        <item>"/apex/com.android.art/javalib/core-oj.jar"</item>
+        <item>"/apex/com.android.art/javalib/core-libart.jar"</item>
+        <item>"/apex/com.android.media/javalib/updatable-media.jar"</item>
+    </string-array>
+
+    <!-- True if home app should be pinned via Pinner Service -->
+    <bool name="config_pinnerHomeApp">true</bool>
+
+    <!-- Should the pinner service pin the Camera application? -->
+    <bool name="config_pinnerCameraApp">true</bool>
+
+    <!-- Whether action menu items should be displayed in ALLCAPS or not.
+         Defaults to true. If this is not appropriate for specific locales
+         it should be disabled in that locale's resources. -->
+    <bool name="config_buttonTextAllCaps">false</bool>
+
+    <!-- Disable stock OTA components if installed -->
+    <string-array name="config_globallyDisabledComponents" translatable="false">
+        <item>com.google.android.as/com.google.intelligence.sense.ambientmusic.history.HistoryContentProvider</item>
+        <item>com.google.android.as/com.google.intelligence.sense.ambientmusic.history.HistoryActivity</item>
+        <item>com.google.android.as/com.google.intelligence.sense.ambientmusic.AmbientMusicSettingsActivity</item>
+        <item>com.google.android.as/com.google.intelligence.sense.ambientmusic.AmbientMusicNotificationsSettingsActivity</item>
+        <item>com.google.android.as/com.google.intelligence.sense.ambientmusic.AmbientMusicSetupWizardActivity</item>
+        <item>com.google.android.gsf/com.google.android.gsf.update.SystemUpdateActivity</item>
+        <item>com.google.android.gsf/com.google.android.gsf.update.SystemUpdateService$Receiver</item>
+        <item>com.google.android.gsf/com.google.android.gsf.update.SystemUpdateService$SecretCodeReceiver</item>
+        <item>com.google.android.gsf/com.google.android.gsf.update.SystemUpdateServiceReceiver</item>
+        <item>com.google.android.gms/com.google.android.gms.update.SystemUpdateActivity</item>
+        <item>com.google.android.gms/com.google.android.gms.update.SystemUpdateService$Receiver</item>
+        <item>com.google.android.gms/com.google.android.gms.update.SystemUpdateService$ActiveReceiver</item>
+        <item>com.google.android.gms/com.google.android.gms.update.SystemUpdateService$SecretCodeReceiver</item>
+        <item>com.google.android.gms/com.google.android.gms.update.SystemUpdateServiceReceiver</item>
+    </string-array>
+
+    <!-- Force enabling of some services that could have been previously disabled -->
+    <string-array name="config_forceEnabledComponents" translatable="false">
+        <item>com.google.android.gsf/com.google.android.gsf.update.SystemUpdateService</item>
+        <item>com.google.android.gms/com.google.android.gms.update.SystemUpdateService</item>
+    </string-array>
+
+</resources>

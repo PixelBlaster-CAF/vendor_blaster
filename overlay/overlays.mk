@@ -14,8 +14,8 @@
 
 # Overlays
 PRODUCT_PACKAGES += \
-    AOSPAFrameworksOverlay \
-    AOSPASettingsOverlay \
-    AOSPASettingsProviderOverlay \
-    AOSPASystemUIOverlay \
-    ParanoidLauncherOverlay
+    BlasterFrameworksOverlay \
+    BlasterSettingsOverlay \
+    BlasterSettingsProviderOverlay \
+    BlasterSystemUIOverlay \
+    BlasterLauncherOverlay
