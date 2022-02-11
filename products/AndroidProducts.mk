@@ -14,6 +14,8 @@
 
 # Product Makefiles
 PRODUCT_MAKEFILES += \
+    $(LOCAL_DIR)/lemonkebab/blaster_lemonkebab.mk
 
 # Lunch targets
 COMMON_LUNCH_CHOICES += \
+    blaster_lemonkebab-userdebug
