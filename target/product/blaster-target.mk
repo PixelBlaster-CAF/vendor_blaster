@@ -49,10 +49,6 @@ $(call inherit-product, vendor/blaster/target/product/properties.mk)
 # Include SEPolicy makefile.
 $(call inherit-product, vendor/blaster/sepolicy/sepolicy.mk)
 
-# Include GMS, Modules, and Pixel features.
-$(call inherit-product, vendor/google/gms/config.mk)
-$(call inherit-product, vendor/google/pixel/config.mk)
-
 ifeq ($(TARGET_FLATTEN_APEX), false)
 $(call inherit-product-if-exists, vendor/google/modules/build/mainline_modules_s.mk)
 else

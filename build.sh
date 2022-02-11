@@ -204,15 +204,15 @@ elif [ "${KEY_MAPPINGS}" ]; then
     echo -e "${CLR_BLD_BLU}Signing target files apks${CLR_RST}"
     sign_target_files_apks -o -d $KEY_MAPPINGS \
         out/dist/blaster_$DEVICE-target_files-$FILE_NAME_TAG.zip \
-        PixelBlaster-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD-signed-target_files-$FILE_NAME_TAG.zip
+        PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BUILD_GAPPS-$BLASTER_BUILD-signed-target_files-$FILE_NAME_TAG.zip
 
     checkExit
 
     echo -e "${CLR_BLD_BLU}Generating signed install package${CLR_RST}"
     ota_from_target_files -k $KEY_MAPPINGS/releasekey \
         --block ${INCREMENTAL} \
-        PixelBlaster-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD-signed-target_files-$FILE_NAME_TAG.zip \
-        PixelPixelBlaster-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD-$BLASTER_BUILD.zip
+        PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BUILD_GAPPS-$BLASTER_BUILD-signed-target_files-$FILE_NAME_TAG.zip \
+        PixelPixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BUILD_GAPPS-$BLASTER_BUILD-$BLASTER_BUILD.zip
 
     checkExit
 
@@ -224,16 +224,16 @@ elif [ "${KEY_MAPPINGS}" ]; then
         fi
         ota_from_target_files -k $KEY_MAPPINGS/releasekey \
             --block --incremental_from $DELTA_TARGET_FILES \
-            PixelBlaster-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD-signed-target_files-$FILE_NAME_TAG.zip \
-            PixelBlaster-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD-delta.zip
+            PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BUILD_GAPPS-$BLASTER_BUILD-signed-target_files-$FILE_NAME_TAG.zip \
+            PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BUILD_GAPPS-$BLASTER_BUILD-delta.zip
         checkExit
     fi
 
     if [ "$FLAG_IMG_ZIP" = 'y' ]; then
         echo -e "${CLR_BLD_BLU}Generating signed fastboot package${CLR_RST}"
         img_from_target_files \
-            PixelBlaster-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD-signed-target_files-$FILE_NAME_TAG.zip \
-            PixelBlaster-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD-signed-image.zip
+            PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BUILD_GAPPS-$BLASTER_BUILD-signed-target_files-$FILE_NAME_TAG.zip \
+            PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BUILD_GAPPS-$BLASTER_BUILD-signed-image.zip
         checkExit
     fi
 # Build rom package
@@ -242,15 +242,15 @@ elif [ "$FLAG_IMG_ZIP" = 'y' ]; then
 
     checkExit
 
-    cp -f $OUT/blaster_$DEVICE-ota-$FILE_NAME_TAG.zip $OUT/PixelBlaster-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD.zip
-    cp -f $OUT/blaster_$DEVICE-img-$FILE_NAME_TAG.zip $OUT/PixelBlaster-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD-image.zip
+    cp -f $OUT/blaster_$DEVICE-ota-$FILE_NAME_TAG.zip $OUT/PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BUILD_GAPPS-$BLASTER_BUILD.zip
+    cp -f $OUT/blaster_$DEVICE-img-$FILE_NAME_TAG.zip $OUT/PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BUILD_GAPPS-$BLASTER_BUILD-image.zip
 
 else
     m otapackage "$CMD"
 
     checkExit
 
-    cp -f $OUT/blaster_$DEVICE-ota-$FILE_NAME_TAG.zip $OUT/PixelBlaster-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD.zip
+    cp -f $OUT/blaster_$DEVICE-ota-$FILE_NAME_TAG.zip $OUT/PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BUILD_GAPPS-$BLASTER_BUILD.zip
 fi
 echo -e ""
 
