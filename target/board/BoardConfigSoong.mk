@@ -17,6 +17,7 @@ $(foreach v,$(EXPORT_TO_SOONG),$(eval $(call addVar,$(v))))
 
 SOONG_CONFIG_NAMESPACES += blasterGlobalVars
 SOONG_CONFIG_blasterGlobalVars += \
+    camera_needs_client_info \
     target_init_vendor_lib \
     target_ld_shim_libs \
     target_process_sdk_version_override \
@@ -33,7 +34,7 @@ SOONG_CONFIG_blasterGlobalVars_target_ld_shim_libs := $(subst $(space),:,$(TARGE
 SOONG_CONFIG_blasterGlobalVars_target_process_sdk_version_override := $(TARGET_PROCESS_SDK_VERSION_OVERRIDE)
 SOONG_CONFIG_blasterGlobalVars_target_surfaceflinger_udfps_lib := $(TARGET_SURFACEFLINGER_UDFPS_LIB)
 SOONG_CONFIG_blasterGlobalVars_supports_extended_compress_format := $(AUDIO_FEATURE_ENABLED_EXTENDED_COMPRESS_FORMAT)
-
+SOONG_CONFIG_blasterGlobalVars_camera_needs_client_info := $(TARGET_CAMERA_NEEDS_CLIENT_INFO)
 
 # Gestures
 define add-gesturevar-if-exist
