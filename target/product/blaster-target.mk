@@ -77,7 +77,9 @@ PRODUCT_COPY_FILES += \
     vendor/blaster/target/config/permissions/privapp-permissions-hotword.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/privapp-permissions-hotword.xml \
     vendor/blaster/target/config/permissions/qti_whitelist.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/sysconfig/qti_whitelist.xml \
     vendor/blaster/target/config/permissions/obdm_permissions.xml:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/permissions/obdm_permissions.xml \
-    vendor/blaster/target/config/permissions/privapp-permissions-omadm.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/privapp-permissions-omadm.xml
+    vendor/blaster/target/config/permissions/privapp-permissions-omadm.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/privapp-permissions-omadm.xml \
+    vendor/blaster/target/config/permissions/privapp-permissions-google_prebuilt.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/privapp-permissions-google_prebuilt.xml \
+    vendor/blaster/target/config/permissions/privapp-permissions-pb-product.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/privapp-permissions-pb-product.xml
 
 # Skip boot JAR checks.
 SKIP_BOOT_JARS_CHECK := true
