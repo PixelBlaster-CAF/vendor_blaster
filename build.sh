@@ -38,6 +38,7 @@ function showHelpAndExit {
         echo -e "${CLR_BLD_BLU}  -r, --repo-sync       Sync before building${CLR_RST}"
         echo -e "${CLR_BLD_BLU}  -v, --variant         Build Type - Can be Gapps or Vanilla${CLR_RST}"
         echo -e "${CLR_BLD_BLU}  -t, --build-type      Specify build type${CLR_RST}"
+        echo -e "${CLR_BLD_BLU}  -o, --official        Build official build${CLR_RST}"
         echo -e "${CLR_BLD_BLU}  -j, --jobs            Specify jobs/threads to use${CLR_RST}"
         echo -e "${CLR_BLD_BLU}  -m, --module          Build a specific module${CLR_RST}"
         echo -e "${CLR_BLD_BLU}  -s, --sign-keys       Specify path to sign key mappings${CLR_RST}"
@@ -49,8 +50,8 @@ function showHelpAndExit {
 }
 
 # Setup getopt.
-long_opts="help,clean,installclean,repo-sync,variant:,build-type:,jobs:,module:,sign-keys:,pwfile:,backup-unsigned,delta:,imgzip"
-getopt_cmd=$(getopt -o hcirv:t:j:m:s:p:bd:z --long "$long_opts" \
+long_opts="help,clean,installclean,repo-sync,variant:,build-type:,jobs:,module:,sign-keys:,pwfile:,backup-unsigned,delta:,imgzip,official:"
+getopt_cmd=$(getopt -o hcirv:t:j:m:s:p:bd:zo: --long "$long_opts" \
             -n $(basename $0) -- "$@") || \
             { echo -e "${CLR_BLD_RED}\nError: Getopt failed. Extra args\n${CLR_RST}"; showHelpAndExit; exit 1;}
 
@@ -71,6 +72,7 @@ while true; do
         -b|--backup-unsigned|b|backup-unsigned) FLAG_BACKUP_UNSIGNED=y;;
         -d|--delta|d|delta) DELTA_TARGET_FILES="$2"; shift;;
         -z|--imgzip|img|imgzip) FLAG_IMG_ZIP=y;;
+        -o|--official|o|official) OFFICIAL=y; shift;;
         --) shift; break;;
     esac
     shift
@@ -109,6 +111,17 @@ if [ $BUILD_GAPPS ]; then
         export BUILD_GAPPS=VANILLA
     else
         echo -e "${CLR_BLD_RED} Unknown Build variant - use vanilla or gapps${CLR_RST}"
+        exit 1
+    fi
+fi
+
+# Setup Official Build if specified
+if [ $OFFICIAL ]; then
+    OFFICIAL=`echo $OFFICIAL |  tr "[:upper:]" "[:lower:]"`
+    if [ "${OFFICIAL}" = "y" ]; then
+        export BLASTER_BUILD_TYPE=OFFICIAL
+    else
+        export BLASTER_BUILD_TYPE=UNOFFICIAL
         exit 1
     fi
 fi
@@ -204,15 +217,15 @@ elif [ "${KEY_MAPPINGS}" ]; then
     echo -e "${CLR_BLD_BLU}Signing target files apks${CLR_RST}"
     sign_target_files_apks -o -d $KEY_MAPPINGS \
         out/dist/blaster_$DEVICE-target_files-$FILE_NAME_TAG.zip \
-        PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BUILD_GAPPS-$BLASTER_BUILD-signed-target_files-$FILE_NAME_TAG.zip
+        PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD_TYPE-$BUILD_GAPPS-$BLASTER_BUILD-signed-target_files-$FILE_NAME_TAG.zip
 
     checkExit
 
     echo -e "${CLR_BLD_BLU}Generating signed install package${CLR_RST}"
     ota_from_target_files -k $KEY_MAPPINGS/releasekey \
         --block ${INCREMENTAL} \
-        PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BUILD_GAPPS-$BLASTER_BUILD-signed-target_files-$FILE_NAME_TAG.zip \
-        PixelPixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BUILD_GAPPS-$BLASTER_BUILD-$BLASTER_BUILD.zip
+        PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD_TYPE-$BUILD_GAPPS-$BLASTER_BUILD-signed-target_files-$FILE_NAME_TAG.zip \
+        PixelPixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD_TYPE-$BUILD_GAPPS-$BLASTER_BUILD-$BLASTER_BUILD.zip
 
     checkExit
 
@@ -224,16 +237,16 @@ elif [ "${KEY_MAPPINGS}" ]; then
         fi
         ota_from_target_files -k $KEY_MAPPINGS/releasekey \
             --block --incremental_from $DELTA_TARGET_FILES \
-            PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BUILD_GAPPS-$BLASTER_BUILD-signed-target_files-$FILE_NAME_TAG.zip \
-            PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BUILD_GAPPS-$BLASTER_BUILD-delta.zip
+            PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD_TYPE-$BUILD_GAPPS-$BLASTER_BUILD-signed-target_files-$FILE_NAME_TAG.zip \
+            PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD_TYPE-$BUILD_GAPPS-$BLASTER_BUILD-delta.zip
         checkExit
     fi
 
     if [ "$FLAG_IMG_ZIP" = 'y' ]; then
         echo -e "${CLR_BLD_BLU}Generating signed fastboot package${CLR_RST}"
         img_from_target_files \
-            PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BUILD_GAPPS-$BLASTER_BUILD-signed-target_files-$FILE_NAME_TAG.zip \
-            PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BUILD_GAPPS-$BLASTER_BUILD-signed-image.zip
+            PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD_TYPE-$BUILD_GAPPS-$BLASTER_BUILD-signed-target_files-$FILE_NAME_TAG.zip \
+            PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD_TYPE-$BUILD_GAPPS-$BLASTER_BUILD-signed-image.zip
         checkExit
     fi
 # Build rom package
@@ -242,15 +255,15 @@ elif [ "$FLAG_IMG_ZIP" = 'y' ]; then
 
     checkExit
 
-    cp -f $OUT/blaster_$DEVICE-ota-$FILE_NAME_TAG.zip $OUT/PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BUILD_GAPPS-$BLASTER_BUILD.zip
-    cp -f $OUT/blaster_$DEVICE-img-$FILE_NAME_TAG.zip $OUT/PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BUILD_GAPPS-$BLASTER_BUILD-image.zip
+    cp -f $OUT/blaster_$DEVICE-ota-$FILE_NAME_TAG.zip $OUT/PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD_TYPE-$BUILD_GAPPS-$BLASTER_BUILD.zip
+    cp -f $OUT/blaster_$DEVICE-img-$FILE_NAME_TAG.zip $OUT/PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD_TYPE-$BUILD_GAPPS-$BLASTER_BUILD-image.zip
 
 else
     m otapackage "$CMD"
 
     checkExit
 
-    cp -f $OUT/blaster_$DEVICE-ota-$FILE_NAME_TAG.zip $OUT/PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BUILD_GAPPS-$BLASTER_BUILD.zip
+    cp -f $OUT/blaster_$DEVICE-ota-$FILE_NAME_TAG.zip $OUT/PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD_TYPE-$BUILD_GAPPS-$BLASTER_BUILD.zip
 fi
 echo -e ""
 
