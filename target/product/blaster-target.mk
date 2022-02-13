@@ -18,14 +18,12 @@ $(call inherit-product, vendor/blaster/target/product/version.mk)
 BLASTER_DEVICE := $(shell echo "$(DEVICE)" | cut -d'_' -f 2,3)
 LIST := $(shell cat vendor/blaster/blaster_devices)
 
-ifeq ($(filter $(BLASTER_DEVICE), $(LIST)), $(BLASTER_DEVICE))
-    ifeq ($(filter-out Official OFFICIAL, $(BLASTER_BUILD_TYPE)),)
-        BLASTER_BUILD_VARIANT := OFFICIAL
-    endif
+ifeq ($(BLASTER_BUILD_TYPE),OFFICIAL)
+    ifeq ($(filter $(BLASTER_DEVICE), $(LIST)), $(BLASTER_DEVICE))
+          BLASTER_BUILD_TYPE := OFFICIAL
 else
-    ifeq ($(filter-out Official OFFICIAL, $(BLASTER_BUILD_TYPE)),)
-        $(error "Device is not officially supported!")
-    endif
+      $(error "Device is not officially supported!")
+endif
 endif
 
 # Bootanimation
