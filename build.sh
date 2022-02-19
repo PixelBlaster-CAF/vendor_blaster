@@ -251,12 +251,23 @@ elif [ "${KEY_MAPPINGS}" ]; then
     fi
 # Build rom package
 elif [ "$FLAG_IMG_ZIP" = 'y' ]; then
-    m updatepackage otapackage "$CMD"
+    m otatools target-files-package "$CMD"
 
     checkExit
 
-    cp -f $OUT/blaster_$DEVICE-ota-$FILE_NAME_TAG.zip $OUT/PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD_TYPE-$BUILD_GAPPS-$BLASTER_BUILD.zip
-    cp -f $OUT/blaster_$DEVICE-img-$FILE_NAME_TAG.zip $OUT/PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD_TYPE-$BUILD_GAPPS-$BLASTER_BUILD-image.zip
+    echo -e "${CLR_BLD_BLU}Generating install package${CLR_RST}"
+    ota_from_target_files \
+        "$OUT"/obj/PACKAGING/target_files_intermediates/blaster_$DEVICE-target_files-$FILE_NAME_TAG.zip \
+        PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD_TYPE-$BUILD_GAPPS-$BLASTER_BUILD.zip
+
+    checkExit
+
+    echo -e "${CLR_BLD_BLU}Generating fastboot package${CLR_RST}"
+    img_from_target_files \
+        "$OUT"/obj/PACKAGING/target_files_intermediates/blaster_$DEVICE-target_files-$FILE_NAME_TAG.zip \
+        PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD_TYPE-$BUILD_GAPPS-$BLASTER_BUILD-image.zip
+
+    checkExit
 
 else
     m otapackage "$CMD"
