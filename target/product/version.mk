@@ -28,7 +28,8 @@ BLASTER_BUILD_VERSION := 4.5
 
 BUILD_GAPPS := Vanilla
 
-CAF_REVISION_TAG := LA.QSSI.12.0.r1-05800.01-qssi.0
+CAF_SYSTEM_TAG := LA.QSSI.12.0.r1-06100-qssi.0
+CAF_VENDOR_TAG := LA.UM.9.14.r1-18900-LAHAINA.QSSI12.0
 
 # Build Date
 BUILD_DATE := $(shell date -u +%Y%m%d)
@@ -37,4 +38,5 @@ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     ro.pb.version=$(BLASTER_BUILD_VERSION) \
     ro.pb.build_date=$(BUILD_DATE) \
     ro.pb.build_type=$(BLASTER_BUILD_VARIANT) \
-    ro.caf.revision.tag=$(CAF_REVISION_TAG)
+    ro.caf.system.tag=$(CAF_SYSTEM_TAG) \
+    ro.caf.vendor.tag=$(CAF_VENDOR_TAG)
