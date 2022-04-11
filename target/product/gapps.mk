@@ -1,6 +1,6 @@
 # Gapps
 ifeq ($(BUILD_GAPPS),GAPPS)
-$(call inherit-product, vendor/gms/gms_full.mk)
+$(call inherit-product, vendor/gms/products/gms.mk)
 
 # Common Overlay
 DEVICE_PACKAGE_OVERLAYS += \
@@ -10,5 +10,4 @@ DEVICE_PACKAGE_OVERLAYS += \
 PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS +=  \
     vendor/blaster/overlay-gapps
 
-$(call inherit-product, vendor/blaster/target/product/rro_overlays.mk)
 endif
