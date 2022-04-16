@@ -19,6 +19,7 @@ SOONG_CONFIG_NAMESPACES += blasterGlobalVars
 SOONG_CONFIG_blasterGlobalVars += \
     camera_needs_client_info \
     camera_needs_client_info_lib \
+    needs_camera_boottime \
     target_init_vendor_lib \
     target_ld_shim_libs \
     target_process_sdk_version_override \
@@ -37,6 +38,7 @@ SOONG_CONFIG_blasterGlobalVars_target_surfaceflinger_udfps_lib := $(TARGET_SURFA
 SOONG_CONFIG_blasterGlobalVars_supports_extended_compress_format := $(AUDIO_FEATURE_ENABLED_EXTENDED_COMPRESS_FORMAT)
 SOONG_CONFIG_blasterGlobalVars_camera_needs_client_info := $(TARGET_CAMERA_NEEDS_CLIENT_INFO)
 SOONG_CONFIG_blasterGlobalVars_camera_needs_client_info_lib := $(TARGET_CAMERA_NEEDS_CLIENT_INFO_LIB)
+SOONG_CONFIG_blasterGlobalVars_needs_camera_boottime := $(TARGET_CAMERA_BOOTTIME_TIMESTAMP)
 
 # Gestures
 define add-gesturevar-if-exist
