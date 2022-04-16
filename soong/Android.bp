@@ -106,6 +106,23 @@ camera_needs_client_info_lib {
 }
 
 soong_config_module_type {
+    name: "camera_parameter_library",
+    module_type: "cc_defaults",
+    config_namespace: "blasterGlobalVars",
+    value_variables: ["uses_camera_parameter_lib"],
+    properties: ["whole_static_libs"],
+}
+
+camera_parameter_library {
+    name: "camera_parameter_library_defaults",
+    soong_config_variables: {
+        uses_camera_parameter_lib: {
+            whole_static_libs: ["%s"],
+        },
+    },
+}
+
+soong_config_module_type {
     name: "surfaceflinger_udfps_lib",
     module_type: "cc_defaults",
     config_namespace: "blasterGlobalVars",
