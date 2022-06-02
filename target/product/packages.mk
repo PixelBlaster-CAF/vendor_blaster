@@ -32,6 +32,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     ThemePicker
 
+# Updater
+PRODUCT_PACKAGES += \
+    Updater
+
 # Gestures
 PRODUCT_PACKAGES += \
     vendor.aospa.power-service
