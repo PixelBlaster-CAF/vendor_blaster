@@ -1,0 +1,3 @@
+on post-fs-data
+    mkdir /data/system_updates 0770 system cache encryption=Require
+    mkdir /cache/recovery 0770 system cache

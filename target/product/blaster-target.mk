@@ -76,5 +76,9 @@ PRODUCT_COPY_FILES += \
     vendor/blaster/target/config/permissions/privapp-permissions-google_prebuilt.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/privapp-permissions-google_prebuilt.xml \
     vendor/blaster/target/config/permissions/privapp-permissions-pb-product.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/privapp-permissions-pb-product.xml
 
+# Copy all PixelBlaster-specific init rc files
+$(foreach f,$(wildcard vendor/blaster/prebuilt/etc/init/*.rc),\
+	$(eval PRODUCT_COPY_FILES += $(f):$(TARGET_COPY_OUT_SYSTEM)/etc/init/$(notdir $f)))
+
 # Skip boot JAR checks.
 SKIP_BOOT_JARS_CHECK := true
