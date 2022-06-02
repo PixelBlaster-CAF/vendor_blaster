@@ -281,6 +281,17 @@ echo -e ""
 # Check the finishing time
 TIME_END=$(date +%s.%N)
 
+BLASTER_TARGET_PACKAGE="$OUT/PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD_TYPE-$BUILD_GAPPS-$BLASTER_BUILD.zip"
+
+echo -e "${CL_CYN}=============================-Package Details-============================${CL_RST}"
+echo -e "${CL_CYN}File           : ${CL_MAG}$BLASTER_TARGET_PACKAGE${CL_RST}"
+echo -e "${CL_CYN}ZipName        : ${CL_MAG}PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD_TYPE-$BUILD_GAPPS-$BLASTER_BUILD.zip${CL_RST}"
+echo -e "${CL_CYN}Build ID       : $(md5sum $BLASTER_TARGET_PACKAGE | awk '{print $1}')${CL_RST}"
+echo -e "${CL_CYN}Size           : ${CL_MAG}$(du -hs $BLASTER_TARGET_PACKAGE | awk '{print $1}')${CL_RST}"
+echo -e "${CL_CYN}Size(Bytes)    : ${CL_MAG}$(wc -c $BLASTER_TARGET_PACKAGE | awk '{print $1}')${CL_RST}"
+echo -e "${CL_CYN}DateTime       : ${CL_MAG}$(grep "ro.build.date.utc=" $OUT/system/build.prop | cut -d "=" -f 2)${CL_RST}"
+echo -e "${CL_CYN}Build Type     : ${CL_MAG}$BLASTER_BUILD_TYPE${CL_RST}"
+echo -e "${CL_CYN}===========================================================================${CL_RST}"
 # Log those times at the end as a fun fact of the day
 echo -e "${CLR_BLD_GRN}Total time elapsed:${CLR_RST} ${CLR_GRN}$(echo "($TIME_END - $TIME_START) / 60" | bc) minutes ($(echo "$TIME_END - $TIME_START" | bc) seconds)${CLR_RST}"
 echo -e ""
