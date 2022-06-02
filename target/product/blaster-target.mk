@@ -57,9 +57,6 @@ $(call inherit-product, vendor/blaster/target/product/packages.mk)
 # Include Properties makefile.
 $(call inherit-product, vendor/blaster/target/product/properties.mk)
 
-# Include SEPolicy makefile.
-$(call inherit-product, vendor/blaster/sepolicy/sepolicy.mk)
-
 ifeq ($(TARGET_FLATTEN_APEX), false)
 $(call inherit-product-if-exists, vendor/google/modules/build/mainline_modules_s.mk)
 else
