@@ -77,6 +77,11 @@ PRODUCT_COPY_FILES += \
     vendor/blaster/target/config/permissions/privapp-permissions-pb-product.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/privapp-permissions-pb-product.xml \
     vendor/blaster/target/config/permissions/privapp-permissions-gms.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/privapp-permissions-gms.xml
 
+# Sensitive phone numbers and APN configurations
+PRODUCT_COPY_FILES += \
+    vendor/blaster/target/config/apns-conf.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/apns-conf.xml \
+    vendor/blaster/target/config/sensitive_pn.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/sensitive_pn.xml
+
 # Copy all PixelBlaster-specific init rc files
 $(foreach f,$(wildcard vendor/blaster/prebuilt/etc/init/*.rc),\
 	$(eval PRODUCT_COPY_FILES += $(f):$(TARGET_COPY_OUT_SYSTEM)/etc/init/$(notdir $f)))
