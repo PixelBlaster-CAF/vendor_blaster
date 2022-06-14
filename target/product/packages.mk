@@ -19,6 +19,9 @@ PRODUCT_PACKAGES += \
     android.hidl.base@1.0.vendor \
     android.hidl.manager@1.0.vendor
 
+PRODUCT_PACKAGES += \
+    Launcher3
+
 # Neural Network
 PRODUCT_PACKAGES += \
     libprotobuf-cpp-full-rtti
