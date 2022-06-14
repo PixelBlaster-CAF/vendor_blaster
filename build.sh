@@ -46,12 +46,13 @@ function showHelpAndExit {
         echo -e "${CLR_BLD_BLU}  -b, --backup-unsigned Store a copy of unsignied package along with signed${CLR_RST}"
         echo -e "${CLR_BLD_BLU}  -d, --delta           Generate a delta ota from the specified target_files zip${CLR_RST}"
         echo -e "${CLR_BLD_BLU}  -z, --imgzip          Generate fastboot flashable image zip from signed target_files${CLR_RST}"
+        echo -e "${CLR_BLD_BLU}  -u, --upload          Automatically upload release build and push OTA update${CLR_RST}"
         exit 1
 }
 
 # Setup getopt.
-long_opts="help,clean,installclean,repo-sync,variant:,build-type:,jobs:,module:,sign-keys:,pwfile:,backup-unsigned,delta:,imgzip,official"
-getopt_cmd=$(getopt -o hcirv:t:j:m:s:p:bd:zo --long "$long_opts" \
+long_opts="help,clean,installclean,repo-sync,variant:,build-type:,jobs:,module:,sign-keys:,pwfile:,backup-unsigned,delta:,imgzip,official,upload"
+getopt_cmd=$(getopt -o hcirv:t:j:m:s:p:bd:zou --long "$long_opts" \
             -n $(basename $0) -- "$@") || \
             { echo -e "${CLR_BLD_RED}\nError: Getopt failed. Extra args\n${CLR_RST}"; showHelpAndExit; exit 1;}
 
@@ -72,7 +73,8 @@ while true; do
         -b|--backup-unsigned|b|backup-unsigned) FLAG_BACKUP_UNSIGNED=y;;
         -d|--delta|d|delta) DELTA_TARGET_FILES="$2"; shift;;
         -z|--imgzip|img|imgzip) FLAG_IMG_ZIP=y;;
-        -o|--official|o|official) OFFICIAL=y; shift;;
+        -o|--official|o|official) OFFICIAL=y;;
+        -u|--upload|u|upload) UPLOAD=y;;
         --) shift; break;;
     esac
     shift
@@ -217,15 +219,15 @@ elif [ "${KEY_MAPPINGS}" ]; then
     echo -e "${CLR_BLD_BLU}Signing target files apks${CLR_RST}"
     sign_target_files_apks -o -d $KEY_MAPPINGS \
         out/dist/blaster_$DEVICE-target_files-$FILE_NAME_TAG.zip \
-        PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD_TYPE-$BUILD_GAPPS-$BLASTER_BUILD-signed-target_files-$FILE_NAME_TAG.zip
+        PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD-$BUILD_GAPPS-$BLASTER_BUILD_TYPE.zip-signed-target_files-$FILE_NAME_TAG.zip
 
     checkExit
 
     echo -e "${CLR_BLD_BLU}Generating signed install package${CLR_RST}"
     ota_from_target_files -k $KEY_MAPPINGS/releasekey \
         --block ${INCREMENTAL} \
-        PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD_TYPE-$BUILD_GAPPS-$BLASTER_BUILD-signed-target_files-$FILE_NAME_TAG.zip \
-        PixelPixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD_TYPE-$BUILD_GAPPS-$BLASTER_BUILD-$BLASTER_BUILD.zip
+        PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD-$BUILD_GAPPS-$BLASTER_BUILD_TYPE.zip-signed-target_files-$FILE_NAME_TAG.zip \
+        PixelPixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD-$BUILD_GAPPS-$BLASTER_BUILD_TYPE.zip-$BLASTER_BUILD.zip
 
     checkExit
 
@@ -237,16 +239,16 @@ elif [ "${KEY_MAPPINGS}" ]; then
         fi
         ota_from_target_files -k $KEY_MAPPINGS/releasekey \
             --block --incremental_from $DELTA_TARGET_FILES \
-            PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD_TYPE-$BUILD_GAPPS-$BLASTER_BUILD-signed-target_files-$FILE_NAME_TAG.zip \
-            PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD_TYPE-$BUILD_GAPPS-$BLASTER_BUILD-delta.zip
+            PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD-$BUILD_GAPPS-$BLASTER_BUILD_TYPE.zip-signed-target_files-$FILE_NAME_TAG.zip \
+            PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD-$BUILD_GAPPS-$BLASTER_BUILD_TYPE.zip-delta.zip
         checkExit
     fi
 
     if [ "$FLAG_IMG_ZIP" = 'y' ]; then
         echo -e "${CLR_BLD_BLU}Generating signed fastboot package${CLR_RST}"
         img_from_target_files \
-            PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD_TYPE-$BUILD_GAPPS-$BLASTER_BUILD-signed-target_files-$FILE_NAME_TAG.zip \
-            PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD_TYPE-$BUILD_GAPPS-$BLASTER_BUILD-signed-image.zip
+            PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD-$BUILD_GAPPS-$BLASTER_BUILD_TYPE.zip-signed-target_files-$FILE_NAME_TAG.zip \
+            PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD-$BUILD_GAPPS-$BLASTER_BUILD_TYPE.zip-signed-image.zip
         checkExit
     fi
 # Build rom package
@@ -258,14 +260,14 @@ elif [ "$FLAG_IMG_ZIP" = 'y' ]; then
     echo -e "${CLR_BLD_BLU}Generating install package${CLR_RST}"
     ota_from_target_files \
         "$OUT"/obj/PACKAGING/target_files_intermediates/blaster_$DEVICE-target_files-$FILE_NAME_TAG.zip \
-        PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD_TYPE-$BUILD_GAPPS-$BLASTER_BUILD.zip
+        PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD-$BUILD_GAPPS-$BLASTER_BUILD_TYPE.zip
 
     checkExit
 
     echo -e "${CLR_BLD_BLU}Generating fastboot package${CLR_RST}"
     img_from_target_files \
         "$OUT"/obj/PACKAGING/target_files_intermediates/blaster_$DEVICE-target_files-$FILE_NAME_TAG.zip \
-        PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD_TYPE-$BUILD_GAPPS-$BLASTER_BUILD-image.zip
+        PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD-$BUILD_GAPPS-$BLASTER_BUILD_TYPE.zip-image.zip
 
     checkExit
 
@@ -274,24 +276,33 @@ else
 
     checkExit
 
-    cp -f $OUT/blaster_$DEVICE-ota-$FILE_NAME_TAG.zip $OUT/PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD_TYPE-$BUILD_GAPPS-$BLASTER_BUILD.zip
+    cp -f $OUT/blaster_$DEVICE-ota-$FILE_NAME_TAG.zip $OUT/PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD-$BUILD_GAPPS-$BLASTER_BUILD_TYPE.zip
 fi
 echo -e ""
 
 # Check the finishing time
 TIME_END=$(date +%s.%N)
 
-BLASTER_TARGET_PACKAGE="$OUT/PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD_TYPE-$BUILD_GAPPS-$BLASTER_BUILD.zip"
+export BLASTER_TARGET_PACKAGE="$OUT/PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD-$BUILD_GAPPS-$BLASTER_BUILD_TYPE.zip"
 
 echo -e "${CL_CYN}=============================-Package Details-============================${CL_RST}"
 echo -e "${CL_CYN}File           : ${CL_MAG}$BLASTER_TARGET_PACKAGE${CL_RST}"
-echo -e "${CL_CYN}ZipName        : ${CL_MAG}PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD_TYPE-$BUILD_GAPPS-$BLASTER_BUILD.zip${CL_RST}"
+echo -e "${CL_CYN}ZipName        : ${CL_MAG}PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD-$BUILD_GAPPS-$BLASTER_BUILD_TYPE.zip${CL_RST}"
 echo -e "${CL_CYN}Build ID       : $(md5sum $BLASTER_TARGET_PACKAGE | awk '{print $1}')${CL_RST}"
 echo -e "${CL_CYN}Size           : ${CL_MAG}$(du -hs $BLASTER_TARGET_PACKAGE | awk '{print $1}')${CL_RST}"
 echo -e "${CL_CYN}Size(Bytes)    : ${CL_MAG}$(wc -c $BLASTER_TARGET_PACKAGE | awk '{print $1}')${CL_RST}"
 echo -e "${CL_CYN}DateTime       : ${CL_MAG}$(grep "ro.build.date.utc=" $OUT/system/build.prop | cut -d "=" -f 2)${CL_RST}"
 echo -e "${CL_CYN}Build Type     : ${CL_MAG}$BLASTER_BUILD_TYPE${CL_RST}"
 echo -e "${CL_CYN}===========================================================================${CL_RST}"
+
+if [ ! -z "$OFFICIAL" ]
+then
+if [ ! -z "$UPLOAD" ] 
+then
+        echo -e "${CLR_BLD_GRN}Pushing OTA...${CLR_RST}"
+        ./ota.sh
+fi
+fi
 # Log those times at the end as a fun fact of the day
 echo -e "${CLR_BLD_GRN}Total time elapsed:${CLR_RST} ${CLR_GRN}$(echo "($TIME_END - $TIME_START) / 60" | bc) minutes ($(echo "$TIME_END - $TIME_START" | bc) seconds)${CLR_RST}"
 echo -e ""
