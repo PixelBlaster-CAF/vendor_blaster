@@ -13,7 +13,7 @@
 # limitations under the License.
 
 # GameSpace
-PRODUCT_PACKAGES += \
+#PRODUCT_PACKAGES += \
     GameSpace
 
 # HIDL
@@ -40,7 +40,7 @@ PRODUCT_PACKAGES += \
     ThemePicker
 
 # Updater
-PRODUCT_PACKAGES += \
+#PRODUCT_PACKAGES += \
     Updater
 
 # Gestures
