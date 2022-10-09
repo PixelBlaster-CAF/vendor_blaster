@@ -14,7 +14,7 @@
 
 # Enable Navigation gestures.
 PRODUCT_PRODUCT_PROPERTIES += \
-    ro.boot.vendor.overlay.theme=com.android.internal.systemui.navbar.gestural
+    ro.boot.vendor.overlay.theme=com.android.internal.systemui.navbar.gestural;com.google.android.systemui.gxoverlay
 
 # Enforce privapp-permissions whitelist.
 PRODUCT_SYSTEM_EXT_PROPERTIES += \
