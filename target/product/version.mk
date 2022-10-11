@@ -24,12 +24,12 @@
 # This is the global AOSPA version flavor that determines the focal point
 # behind our releases. This is bundled alongside $(AOSPA_MINOR_VERSION)
 # and only changes per major Android releases.
-BLASTER_BUILD_VERSION := 5.2
+BLASTER_BUILD_VERSION := 6.0
 
 BUILD_GAPPS := Vanilla
 
-CAF_SYSTEM_TAG := LA.QSSI.12.0.r1-07600-qssi.0
-CAF_VENDOR_TAG := LA.UM.9.14.r1-19600.01-LAHAINA.QSSI12.0
+CAF_SYSTEM_TAG := LA.QSSI.13.0.r1-07100-qssi.0
+CAF_VENDOR_TAG := LA.UM.9.14.2.r1-02800-QCM6490.QSSI12.0
 
 # Build Date
 BUILD_DATE := $(shell date -u +%Y%m%d)
