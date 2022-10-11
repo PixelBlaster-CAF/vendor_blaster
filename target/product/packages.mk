@@ -26,6 +26,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     Launcher3
 
+# Telephony - AOSP
+PRODUCT_PACKAGES += \
+    Stk
+
 # Neural Network
 PRODUCT_PACKAGES += \
     libprotobuf-cpp-full-rtti
