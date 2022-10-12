@@ -18,7 +18,7 @@ ifeq (blaster_lemonkebab,$(TARGET_PRODUCT))
 
 # Inherit from those products. Most specific first.
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
-$(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base_telephony.mk)
 
 # Inherit from lemonkebab device
 $(call inherit-product, device/oneplus/lemonkebab/device.mk)
@@ -40,4 +40,11 @@ PRODUCT_BRAND := OnePlus
 PRODUCT_MODEL := LE2101
 
 PRODUCT_GMS_CLIENTID_BASE := android-oneplus
+
+PRODUCT_BUILD_PROP_OVERRIDES += \
+    PRIVATE_BUILD_DESC="OnePlus9R_IND-user 12 RKQ1.211119.001 R.202207300316 release-keys" \
+    TARGET_DEVICE=OnePlus9R \
+    TARGET_PRODUCT=OnePlus9R_IND
+
+BUILD_FINGERPRINT := OnePlus/OnePlus9R_IND/OnePlus9R:12/RKQ1.211119.001/R.202207300316:user/release-keys
 endif
