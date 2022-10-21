@@ -22,7 +22,8 @@ PRODUCT_PACKAGES += \
     NavigationBarModeGesturalOverlayFS \
     AndroidBlackThemeOverlay \
     CustomPixelLauncherOverlay \
-    BlasterThemePickerOverlay
+    BlasterThemePickerOverlay \
+    NoCombinedIconsOverlay \
 
 PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += vendor/blaster/overlay/static
 DEVICE_PACKAGE_OVERLAYS += vendor/blaster/overlay/static
