@@ -14,10 +14,10 @@
 
 # Product Makefiles
 PRODUCT_MAKEFILES += \
-    $(LOCAL_DIR)/lemonkebab/blaster_lemonkebab.mk \
+    $(LOCAL_DIR)/opkona/blaster_opkona.mk \
     $(LOCAL_DIR)/nicky/blaster_nicky.mk
 
 # Lunch targets
 COMMON_LUNCH_CHOICES += \
-    blaster_lemonkebab-userdebug \
+    blaster_opkona-userdebug \
     blaster_nicky-userdebug
