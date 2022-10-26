@@ -67,7 +67,7 @@ while true; do
         -v|--variant|v|variant) BUILD_GAPPS="$2"; shift;;
         -t|--build-type|t|build-type) BUILD_TYPE="$2"; shift;;
         -j|--jobs|j|jobs) JOBS="$2"; shift;;
-        -m|--module|m|module) MODULE="$2"; shift;;
+        -m|--module|m|module) MODULES+=("$2"); echo $2; shift;;
         -s|--sign-keys|s|sign-keys) KEY_MAPPINGS="$2"; shift;;
         -p|--pwfile|p|pwfile) PWFILE="$2"; shift;;
         -b|--backup-unsigned|b|backup-unsigned) FLAG_BACKUP_UNSIGNED=y;;
@@ -159,13 +159,6 @@ if [ "$FLAG_CLEAN_BUILD" = 'y' ]; then
         m clobber "$CMD"
 fi
 
-# Prep for a installclean build, if requested so
-if [ "$FLAG_INSTALLCLEAN_BUILD" = 'y' ]; then
-        echo -e "${CLR_BLD_BLU}Cleaning compiled image files left from old builds${CLR_RST}"
-        echo -e ""
-        m installclean "$CMD"
-fi
-
 # Sync up, if asked to
 if [ "$FLAG_SYNC" = 'y' ]; then
         echo -e "${CLR_BLD_BLU}Downloading the latest source files${CLR_RST}"
@@ -186,7 +179,15 @@ echo -e "${CLR_BLD_BLU}Lunching $DEVICE${CLR_RST} ${CLR_CYA}(Including dependenc
 echo -e ""
 BLASTER_VERSION=$(lunch "blaster_$DEVICE-$BUILD_TYPE" | grep 'BLASTER_VERSION=*' | sed 's/.*=//')
 lunch "blaster_$DEVICE-$BUILD_TYPE"
+checkExit
 echo -e ""
+
+# Perform installclean, if requested so
+if [ "$FLAG_INSTALLCLEAN_BUILD" = 'y' ]; then
+	echo -e "${CLR_BLD_BLU}Cleaning compiled image files left from old builds${CLR_RST}"
+	echo -e ""
+	m installclean "$CMD"
+fi
 
 # Build away!
 echo -e "${CLR_BLD_BLU}Starting compilation${CLR_RST}"
@@ -201,7 +202,7 @@ fi
 
 # Build a specific module
 if [ "${MODULE}" ]; then
-    m $MODULE "$CMD"
+    m ${MODULE[@]} "$CMD"
     checkExit
 
 # Build signed rom package if specified
@@ -211,23 +212,23 @@ elif [ "${KEY_MAPPINGS}" ]; then
         export ANDROID_PW_FILE=$PWFILE
     fi
 
-    # Make package for distribution
-    m dist "$CMD"
+    # Make target-files-package
+    m otatools target-files-package "$CMD"
 
     checkExit
 
     echo -e "${CLR_BLD_BLU}Signing target files apks${CLR_RST}"
     sign_target_files_apks -o -d $KEY_MAPPINGS \
-        out/dist/blaster_$DEVICE-target_files-$FILE_NAME_TAG.zip \
-        PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD-$BUILD_GAPPS-$BLASTER_BUILD_TYPE.zip-signed-target_files-$FILE_NAME_TAG.zip
+        "$OUT"/obj/PACKAGING/target_files_intermediates/blaster_$DEVICE-target_files-$FILE_NAME_TAG.zip \
+        PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD-$BUILD_GAPPS-$BLASTER_BUILD_TYPE-signed-target_files-$FILE_NAME_TAG.zip
 
     checkExit
 
     echo -e "${CLR_BLD_BLU}Generating signed install package${CLR_RST}"
     ota_from_target_files -k $KEY_MAPPINGS/releasekey \
         --block ${INCREMENTAL} \
-        PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD-$BUILD_GAPPS-$BLASTER_BUILD_TYPE.zip-signed-target_files-$FILE_NAME_TAG.zip \
-        PixelPixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD-$BUILD_GAPPS-$BLASTER_BUILD_TYPE.zip-$BLASTER_BUILD.zip
+        PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD-$BUILD_GAPPS-$BLASTER_BUILD_TYPE-signed-target_files-$FILE_NAME_TAG.zip \
+        PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD-$BUILD_GAPPS-$BLASTER_BUILD_TYPE.zip
 
     checkExit
 
@@ -239,16 +240,16 @@ elif [ "${KEY_MAPPINGS}" ]; then
         fi
         ota_from_target_files -k $KEY_MAPPINGS/releasekey \
             --block --incremental_from $DELTA_TARGET_FILES \
-            PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD-$BUILD_GAPPS-$BLASTER_BUILD_TYPE.zip-signed-target_files-$FILE_NAME_TAG.zip \
-            PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD-$BUILD_GAPPS-$BLASTER_BUILD_TYPE.zip-delta.zip
+            PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD-$BUILD_GAPPS-$BLASTER_BUILD_TYPE-signed-target_files-$FILE_NAME_TAG.zip \
+            PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD-$BUILD_GAPPS-$BLASTER_BUILD_TYPE-delta.zip
         checkExit
     fi
 
     if [ "$FLAG_IMG_ZIP" = 'y' ]; then
         echo -e "${CLR_BLD_BLU}Generating signed fastboot package${CLR_RST}"
         img_from_target_files \
-            PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD-$BUILD_GAPPS-$BLASTER_BUILD_TYPE.zip-signed-target_files-$FILE_NAME_TAG.zip \
-            PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD-$BUILD_GAPPS-$BLASTER_BUILD_TYPE.zip-signed-image.zip
+            PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD-$BUILD_GAPPS-$BLASTER_BUILD_TYPE-signed-target_files-$FILE_NAME_TAG.zip \
+            PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD-$BUILD_GAPPS-$BLASTER_BUILD_TYPE-signed-image.zip
         checkExit
     fi
 # Build rom package
@@ -267,7 +268,7 @@ elif [ "$FLAG_IMG_ZIP" = 'y' ]; then
     echo -e "${CLR_BLD_BLU}Generating fastboot package${CLR_RST}"
     img_from_target_files \
         "$OUT"/obj/PACKAGING/target_files_intermediates/blaster_$DEVICE-target_files-$FILE_NAME_TAG.zip \
-        PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD-$BUILD_GAPPS-$BLASTER_BUILD_TYPE.zip-image.zip
+        PixelBlaster-CAF-$BLASTER_DISPLAY_VERSION-$BLASTER_BUILD-$BUILD_GAPPS-$BLASTER_BUILD_TYPE-image.zip
 
     checkExit
 
