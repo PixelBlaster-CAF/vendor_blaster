@@ -21,4 +21,5 @@ PRODUCT_PACKAGES += \
     BlasterLauncherOverlay \
     NavigationBarModeGesturalOverlayFS \
     AndroidBlackThemeOverlay \
-    CustomPixelLauncherOverlay
+    CustomPixelLauncherOverlay \
+    BlasterThemePickerOverlay

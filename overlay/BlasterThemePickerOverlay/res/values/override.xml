@@ -16,15 +16,6 @@
 -->
 <resources>
 
-    <!-- List of packages whose icons are used to preview the icon shape for a theme. These are
-        typically GMS apps so they should be available in GMS devices. -->
-    <array name="icon_shape_preview_packages">
-        <item>com.google.android.apps.messaging</item>
-        <item>com.google.android.calculator</item>
-        <item>com.google.android.contacts</item>
-        <item>com.google.android.deskclock</item>
-        <item>com.google.android.dialer</item>
-        <item>com.android.chrome</item>
-    </array>
+    <string name="themes_stub_package" translatable="false">com.blaster.customisation</string>
 
 </resources>

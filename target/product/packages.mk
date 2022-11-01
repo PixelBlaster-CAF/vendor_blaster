@@ -41,6 +41,7 @@ PRODUCT_PACKAGES += \
 
 # Theme Picker
 PRODUCT_PACKAGES += \
+    BlasterThemesStub \
     ThemePicker
 
 # Updater
