@@ -34,10 +34,9 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     libprotobuf-cpp-full-rtti
 
-# Paranoid Packages
+# Repainter integration
 PRODUCT_PACKAGES += \
-    ParanoidPapers \
-    ParanoidQuickStep
+    RepainterServicePriv
 
 # Theme Picker
 PRODUCT_PACKAGES += \
