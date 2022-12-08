@@ -14,17 +14,16 @@
 
 # Overlays
 PRODUCT_PACKAGES += \
-    AndroidBlackThemeOverlay \
     BlasterFrameworksOverlay \
     BlasterSettingsOverlay \
     BlasterSettingsProviderOverlay \
     BlasterSystemUIOverlay \
     BlasterLauncherOverlay \
     NavigationBarModeGesturalOverlayFS \
-    AndroidBlackThemeOverlay \
     CustomPixelLauncherOverlay \
     BlasterThemePickerOverlay \
     NoCombinedIconsOverlay \
+    DarkBgOverlay
 
 PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += vendor/blaster/overlay/static
 DEVICE_PACKAGE_OVERLAYS += vendor/blaster/overlay/static
