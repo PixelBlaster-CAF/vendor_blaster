@@ -24,7 +24,7 @@
 # This is the global AOSPA version flavor that determines the focal point
 # behind our releases. This is bundled alongside $(AOSPA_MINOR_VERSION)
 # and only changes per major Android releases.
-BLASTER_BUILD_VERSION := 6.1
+BLASTER_BUILD_VERSION := 6.2
 
 BUILD_GAPPS := Vanilla
 
