@@ -77,7 +77,8 @@ PRODUCT_COPY_FILES += \
     vendor/blaster/target/config/permissions/privapp-permissions-google_prebuilt.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/privapp-permissions-google_prebuilt.xml \
     vendor/blaster/target/config/permissions/privapp-permissions-pb-product.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/privapp-permissions-pb-product.xml \
     vendor/blaster/target/config/permissions/privapp-permissions-gms.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/privapp-permissions-gms.xml \
-    vendor/blaster/target/config/permissions/privapp-permissions-livedisplay.xml:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/permissions/privapp-permissions-livedisplay.xml
+    vendor/blaster/target/config/permissions/privapp-permissions-livedisplay.xml:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/permissions/privapp-permissions-livedisplay.xml \
+    vendor/blaster/target/config/permissions/privapp-permissions-pb-system_ext.xml:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/permissions/privapp-permissions-pb-system_ext.xml \
 
 # Sensitive phone numbers and APN configurations
 PRODUCT_COPY_FILES += \

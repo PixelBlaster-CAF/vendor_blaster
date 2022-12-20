@@ -20,6 +20,7 @@
     </privapp-permissions>
 
     <privapp-permissions package="com.android.systemui">
+        <permission name="android.permission.MANAGE_PARALLEL_SPACES"/>
         <permission name="android.permission.WRITE_APN_SETTINGS"/>
         <permission name="android.permission.FORCE_STOP_PACKAGES" />
         <permission name="android.permission.CHANGE_CONFIGURATION" />
@@ -64,6 +65,14 @@
         <permission name="android.permission.OBSERVE_APP_USAGE"/>
         <permission name="android.permission.PACKAGE_USAGE_STATS"/>
         <permission name="android.permission.WRITE_SECURE_SETTINGS"/>
+    </privapp-permissions>
+
+    <privapp-permissions package="com.android.settings">
+        <permission name="android.permission.MANAGE_PARALLEL_SPACES"/>
+    </privapp-permissions>
+
+    <privapp-permissions package="com.android.launcher3">
+        <permission name="android.permission.MANAGE_PARALLEL_SPACES"/>
     </privapp-permissions>
 
 </permissions>

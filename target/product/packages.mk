@@ -43,6 +43,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     libprotobuf-cpp-full-rtti
 
+# Parallel Space
+PRODUCT_PACKAGES += \
+    ParallelSpace
+
 # Repainter integration
 PRODUCT_PACKAGES += \
     RepainterServicePriv
