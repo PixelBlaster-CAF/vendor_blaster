@@ -27,7 +27,7 @@ endif
 endif
 
 # Bootanimation
-#PRODUCT_COPY_FILES += vendor/blaster/bootanimation/bootanimation.zip:$(TARGET_COPY_OUT_PRODUCT)/media/bootanimation.zip
+PRODUCT_COPY_FILES += vendor/blaster/bootanimation/bootanimation.zip:$(TARGET_COPY_OUT_PRODUCT)/media/bootanimation.zip
 
 # Don't dexpreopt prebuilts. (For GMS).
 DONT_DEXPREOPT_PREBUILTS := true
