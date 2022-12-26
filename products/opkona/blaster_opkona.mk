@@ -18,7 +18,7 @@ ifeq (blaster_opkona,$(TARGET_PRODUCT))
 
 # Inherit from those products. Most specific first.
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
-$(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base_telephony.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 
 # Inherit from opkona device
 $(call inherit-product, device/oneplus/opkona/device.mk)
@@ -37,14 +37,7 @@ PRODUCT_NAME := blaster_opkona
 PRODUCT_DEVICE := opkona
 PRODUCT_MANUFACTURER := OnePlus
 PRODUCT_BRAND := OnePlus
-PRODUCT_MODEL := LE2101
+PRODUCT_MODEL := kona
 
 PRODUCT_GMS_CLIENTID_BASE := android-oneplus
-
-PRODUCT_BUILD_PROP_OVERRIDES += \
-    PRIVATE_BUILD_DESC="OnePlus9R_IND-user 13 RKQ1.211119.001 R.202209021421 release-keys" \
-    TARGET_DEVICE=OnePlus9R \
-    TARGET_PRODUCT=OnePlus9R_IND
-
-BUILD_FINGERPRINT := OnePlus/OnePlus9R_IND/OnePlus9R:13/RKQ1.211119.001/R.202209021421:user/release-keys
 endif
