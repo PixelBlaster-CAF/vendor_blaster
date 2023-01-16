@@ -25,7 +25,8 @@ SOONG_CONFIG_blasterGlobalVars += \
     target_process_sdk_version_override \
     target_surfaceflinger_udfps_lib \
     supports_extended_compress_format \
-    uses_oplus_camera
+    uses_oplus_camera \
+    uses_nothing_camera
 
 # Set default values
 TARGET_INIT_VENDOR_LIB ?= vendor_init
@@ -41,6 +42,7 @@ SOONG_CONFIG_blasterGlobalVars_camera_needs_client_info := $(TARGET_CAMERA_NEEDS
 SOONG_CONFIG_blasterGlobalVars_camera_needs_client_info_lib := $(TARGET_CAMERA_NEEDS_CLIENT_INFO_LIB)
 SOONG_CONFIG_blasterGlobalVars_needs_camera_boottime := $(TARGET_CAMERA_BOOTTIME_TIMESTAMP)
 SOONG_CONFIG_blasterGlobalVars_uses_oplus_camera := $(TARGET_USES_OPLUS_CAMERA)
+SOONG_CONFIG_blasterGlobalVars_uses_nothing_camera := $(TARGET_USES_NOTHING_CAMERA)
 
 # Gestures
 define add-gesturevar-if-exist
