@@ -201,8 +201,8 @@ else
 fi
 
 # Build a specific module
-if [ "${MODULE}" ]; then
-    m ${MODULE[@]} "$CMD"
+if [ "${MODULES}" ]; then
+    m ${MODULES[@]} "$CMD"
     checkExit
 
 # Build signed rom package if specified
